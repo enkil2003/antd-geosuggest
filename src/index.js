@@ -1,6 +1,6 @@
 // @flow
 import * as React from 'react';
-import { Select, Spin, Button } from 'antd';
+import { Select, Spin } from 'antd';
 import debounce from 'lodash.debounce';
 const Option = Select.Option;
 
@@ -120,7 +120,7 @@ export default class AntdGeosuggest extends React.Component<Props, State> {
       );
     });
   }
-  
+
   handleChange = (value: Options) => {
     const that = this;
     // Geocode the location using Google geocode API. In order to get location's latitude and longtitude.
@@ -136,7 +136,7 @@ export default class AntdGeosuggest extends React.Component<Props, State> {
             if (status === google.maps.GeocoderStatus.OK) {
               const gmaps = results[0],
                 location = gmaps.geometry.location;
-    
+
               newData.gmaps = gmaps;
               newData.lat = location.lat();
               newData.lng = location.lng();
@@ -151,7 +151,7 @@ export default class AntdGeosuggest extends React.Component<Props, State> {
     Promise.all(value.map(site => promiseGeocode({placeId: site.key, address: site.label}))).then(result => {
       that.props.onChange(result);
     })
-    
+
     this.setState({
       value: ((value: any): Array<ResultObj>),
       data: [],
@@ -185,11 +185,10 @@ export default class AntdGeosuggest extends React.Component<Props, State> {
           filterOption={false}
           onSearch={this.fetchLocation}
           onChange={this.handleChange}
-          style={{width: "80%", marginRight: '10px'}}
+          style={{width: "100%", marginRight: '10px'}}
         >
           {data.map(d => <Option key={d.placeId}>{d.address}</Option>)}
         </Select>
-        <Button onClick={this.clearValue}>Clear</Button>
       </div>
     );
   }
